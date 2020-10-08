@@ -21,7 +21,7 @@ void print_task(const Task *task);
 void print_tasks(const Task *tasks, int tasks_count);
 int tasks_total_duration(const Task *tasks, int tasks_count);
 int load_task(FILE *file, Task *task);
-int load_tasks(FILE *file, Task *task_array, int max_task_array_size);
+int load_tasks(FILE *file, Task **task_array);
 int save_task(FILE *file, const Task *task);
 int save_tasks(FILE *file, const Task *tasks, int tasks_count);
 

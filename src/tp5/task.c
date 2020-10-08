@@ -124,12 +124,14 @@ int load_task(FILE *file, Task *task) {
     }
 }
 
-int load_tasks(FILE *file, Task *task_array, int max_task_array_size) {
+int load_tasks(FILE *file, Task **task_array) {
     int loaded_task_count = 0;
-    int res;
+    int max_task_array_size, res;
+    fscanf(file, "%d\n", &max_task_array_size);
+    *task_array = malloc(max_task_array_size * sizeof(Task));
 
     while (loaded_task_count < max_task_array_size && !feof(file)) {
-        res = load_task(file, task_array + loaded_task_count);
+        res = load_task(file, (*task_array) + loaded_task_count);
         if (res == -1) {
             return -1;
         }
@@ -157,6 +159,9 @@ int save_task(FILE *file, const Task *task) {
 
 int save_tasks(FILE *file, const Task *tasks, int tasks_count) {
     int i;
+    if (fprintf(file, "%d\n", tasks_count) < 0) {
+        return 0;
+    }
     for (i = 0; i < tasks_count; i++) {
         if (save_task(file, tasks + i) == 0) {
             return 0;
